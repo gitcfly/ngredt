@@ -41,7 +41,7 @@ var Request2Conn = &sync.Map{}
 
 // tcp内网端口代理,支持所有以tcp为基础的协议(如tcp,http)，服务端实现
 func main() {
-	fileConf := "./ngredt_sever.json"
+	fileConf := "./ngredt_sever.conf"
 	if len(os.Args) >= 2 {
 		fileConf = os.Args[1]
 	}

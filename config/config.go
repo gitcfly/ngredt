@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
+	"strings"
 )
 
 var (
@@ -12,12 +13,25 @@ var (
 
 func InitConf(path string) error {
 	confbytes, err := ioutil.ReadFile(path)
+	conflines := strings.Split(string(confbytes), "\n")
+	var confstr string
+	for _, line := range conflines {
+		line = strings.TrimSpace(line)
+		index := strings.Index(line, "#")
+		if index == 0 {
+			continue
+		}
+		if index == -1 {
+			confstr += line
+			continue
+		}
+		confstr += strings.TrimSpace(line[:index])
+	}
 	if err != nil {
 		logrus.Error(err)
 		return err
 	}
-	err = json.Unmarshal(confbytes, &NgConf)
-	if err != nil {
+	if err = json.Unmarshal([]byte(confstr), &NgConf); err != nil {
 		logrus.Error(err)
 	}
 	return err
