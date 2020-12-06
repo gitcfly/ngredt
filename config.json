@@ -1,0 +1,9 @@
+{
+  "server_host": "127.0.0.1",
+  "server_tcp_port": 8000,
+  "loc_http_port": 8080,
+  "port_mapping": {
+    "client_key1": 8001,
+    "client_key2": 8002
+  }
+}
