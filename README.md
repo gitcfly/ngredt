@@ -3,6 +3,7 @@ tcp网络穿透代理
 
 内网穿透，http/https代理
 
+```
 客户端配置：
 ngredt_client.json
 
@@ -31,3 +32,4 @@ ngredt_sever.json
 服务端执行 ./ngreds ngredt_sever.json
 
 启动后可通过访问1721.123.12312.1241:8888 ，即可访问到本机127.0.0.1:8080端口
+```
