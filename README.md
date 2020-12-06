@@ -4,19 +4,6 @@ tcp网络穿透代理
 内网穿透，http/https代理
 
 ```
-客户端配置：
-ngredt_client.json
-
-{
-  "sev_host": "1721.123.12312.1241", //这里是远程公网服务的地址
-  "sgn_port": 1001, //远程服务端的信令端口
-  "conn_port": 1002, //远程服务端的连接池端口
-  "loc_addr": "127.0.0.1:8080", // 本机服务地址
-  "private_key": "client_key1" // 本机的private_key
-}
-
-客户端启动执行：./ngredt ngredt_client.json
-
 服务端配置：
 ngredt_sever.json
 
@@ -31,5 +18,19 @@ ngredt_sever.json
 
 服务端执行 ./ngreds ngredt_sever.json
 
-启动后可通过访问1721.123.12312.1241:8888 ，即可访问到本机127.0.0.1:8080端口
+
+客户端配置：
+ngredt_client.json
+
+{
+  "sev_host": "1721.123.12312.1241", //这里是远程公网服务的地址
+  "sgn_port": 1001, //远程服务端的信令端口
+  "conn_port": 1002, //远程服务端的连接池端口
+  "loc_addr": "127.0.0.1:8080", // 本机服务地址
+  "private_key": "client_key1" // 本机的private_key
+}
+
+客户端启动执行：./ngredt ngredt_client.json
+
+启动后访问1721.123.12312.1241:8888 ，即可访问到本机127.0.0.1:8080端口
 ```
