@@ -1,7 +1,5 @@
 # ngredt
-tcp网络穿透代理
-
-内网穿透，http/https代理
+tcp网络穿透代理,内网tcp穿透,http/https代理
 
 ```
 服务端配置：
