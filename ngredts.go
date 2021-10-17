@@ -13,7 +13,6 @@ import (
 	"github.com/gitcfly/ngredt/config"
 	"github.com/gitcfly/ngredt/ioutils"
 	"github.com/gitcfly/ngredt/log"
-	"github.com/satori/go.uuid"
 	"github.com/sirupsen/logrus"
 )
 
@@ -108,17 +107,19 @@ func HeartBreakCheck() {
 		for e := TcpRecords.Front(); e != nil; e = next {
 			next = e.Next()
 			tcpRecord := e.Value.(*TcpRecord)
-			if _, err := tcpRecord.sgnConn.Read(tmpData); err != nil {
-				logrus.Infof("client_key=%v,客户端代理连接超时，服务端主动关闭连接以及tcp服务,err=%v", tcpRecord.clientKey, err)
-				if err := tcpRecord.sgnConn.Close(); err != nil {
-					logrus.Error(err)
-				}
-				if err := tcpRecord.tcpListener.Close(); err != nil {
-					logrus.Error(err)
-				}
-				Request2Conn.Delete(tcpRecord.clientKey)
-				TcpRecords.Remove(e)
+			_, err := tcpRecord.sgnConn.Read(tmpData)
+			if err == nil {
+				continue
 			}
+			logrus.Infof("client_key=%v,客户端代理连接超时，服务端主动关闭连接以及tcp服务,err=%v", tcpRecord.clientKey, err)
+			if err := tcpRecord.sgnConn.Close(); err != nil {
+				logrus.Error(err)
+			}
+			if err := tcpRecord.tcpListener.Close(); err != nil {
+				logrus.Error(err)
+			}
+			Request2Conn.Delete(tcpRecord.clientKey)
+			TcpRecords.Remove(e)
 		}
 	}
 }

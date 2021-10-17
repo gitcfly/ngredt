@@ -64,12 +64,13 @@ func main() {
 func RetrySignalConn() net.Conn {
 	sgnAddr := fmt.Sprintf("%v:%v", config.NgConf.SevHost, config.NgConf.SgnPort)
 	for range time.Tick(2 * time.Second) {
-		if signalConn, err := net.Dial("tcp", sgnAddr); err == nil {
-			signalConn.Write([]byte(config.NgConf.PrivateKey + "\n"))
-			return signalConn
-		} else {
+		signalConn, err := net.Dial("tcp", sgnAddr)
+		if err != nil || signalConn == nil {
 			logrus.Error(err)
+			continue
 		}
+		signalConn.Write([]byte(config.NgConf.PrivateKey + "\n"))
+		return signalConn
 	}
 	return nil
 }
